@@ -80,6 +80,14 @@ function placeResources (count: number) {
         tiles.placeOnRandomTile(resource, assets.tile`transparency16`)
     }
 }
+function nextLevel () {
+    if (Level < 3) {
+        Level += 1
+        createLevel(Level)
+    } else {
+        game.over(true, effects.confetti)
+    }
+}
 function createEnemyShips (levelNumber: number) {
     for (let index = 0; index < levelNumber; index++) {
         enemyShip = sprites.create(img`
@@ -104,6 +112,13 @@ function createEnemyShips (levelNumber: number) {
         enemyShip.follow(spaceship, 40 + levelNumber * 10)
     }
 }
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
+    resourceCount += -1
+    otherSprite.destroy(effects.hearts)
+    if (resourceCount <= 0) {
+        nextLevel()
+    }
+})
 function createSpaceship () {
     spaceship = sprites.create(img`
         ....ffffff.........ccc..
@@ -133,7 +148,8 @@ let laser: Sprite = null
 let spaceship: Sprite = null
 let resourceCount = 0
 let asteroid: Sprite = null
-let Level = 1
+let Level = 0
+Level = 1
 createSpaceship()
 createLevel(Level)
 info.setLife(5)
