@@ -1,5 +1,6 @@
 function createAsteroids (levelNumber: number) {
-    for (let index = 0; index < 3 + levelNumber * 2; index++) {
+    list = []
+    for (let index = 0; index < 6; index++) {
         asteroid = sprites.create(img`
             . . . . . . . . b . . . . . . . 
             . . . . . . b d d c . . . . . . 
@@ -18,9 +19,37 @@ function createAsteroids (levelNumber: number) {
             . . b 1 1 d c c b b d 1 1 d b . 
             . . b b b b . . . b b b b b b . 
             `, SpriteKind.Enemy)
-        tiles.placeOnRandomTile(asteroid, assets.tile`transparency16`)
-        asteroid.setVelocity(randint(-30, 30), randint(-30, 30))
-        asteroid.setBounceOnWall(true)
+        list.push(asteroid)
+        asteroid.setFlag(SpriteFlag.Invisible, true)
+    }
+    for (let index = 0; index < 6; index++) {
+        shootingStar = sprites.create(img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . b . . . . . . . 
+            . . . . . . . b d b . . . . . . 
+            . . . . . . . c d c . . . . . . 
+            . . . . . . . c 5 c . . . . . . 
+            . . . . . . c d 5 d c . . . . . 
+            . . . b c c d 5 5 5 d c c b . . 
+            . . b d d 5 5 5 5 5 5 5 d d b . 
+            . . . b c c d 5 5 5 d c c b . . 
+            . . . . . . c d 5 d c . . . . . 
+            . . . . . . . c 5 c . . . . . . 
+            . . . . . . . c d c . . . . . . 
+            . . . . . . . b d b . . . . . . 
+            . . . . . . . . b . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            `, SpriteKind.Enemy)
+        list.push(shootingStar)
+        shootingStar.setFlag(SpriteFlag.Invisible, true)
+    }
+    for (let index = 0; index < 3 + Level * 2; index++) {
+        spawnEnemy = list[randint(0, 11)]
+        tiles.placeOnRandomTile(spawnEnemy, assets.tile`transparency16`)
+        spawnEnemy.setVelocity(randint(-30, 30), randint(-30, 30))
+        spawnEnemy.setBounceOnWall(true)
+        spawnEnemy.setFlag(SpriteFlag.Invisible, false)
     }
 }
 function createLevel (levelNumber: number) {
@@ -147,8 +176,12 @@ let resource: Sprite = null
 let laser: Sprite = null
 let spaceship: Sprite = null
 let resourceCount = 0
+let spawnEnemy: Sprite = null
+let shootingStar: Sprite = null
 let asteroid: Sprite = null
+let list: Sprite[] = []
 let Level = 0
+tiles.setCurrentTilemap(tilemap`level6`)
 Level = 1
 createSpaceship()
 createLevel(Level)
