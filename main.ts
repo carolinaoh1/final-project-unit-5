@@ -1,6 +1,6 @@
 function createAsteroids (levelNumber: number) {
     list = []
-    for (let index = 0; index < 6; index++) {
+    for (let index = 0; index < 12; index++) {
         asteroid = sprites.create(img`
             . . . . . . . . b . . . . . . . 
             . . . . . . b d d c . . . . . . 
@@ -22,7 +22,7 @@ function createAsteroids (levelNumber: number) {
         list.push(asteroid)
         asteroid.setFlag(SpriteFlag.Invisible, true)
     }
-    for (let index = 0; index < 6; index++) {
+    for (let index = 0; index < 12; index++) {
         shootingStar = sprites.create(img`
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
@@ -44,11 +44,10 @@ function createAsteroids (levelNumber: number) {
         list.push(shootingStar)
         shootingStar.setFlag(SpriteFlag.Invisible, true)
     }
-    for (let index = 0; index < 3 + Level * 2; index++) {
-        spawnEnemy = list[randint(0, 11)]
+    for (let index = 0; index < 3 + Level * 4; index++) {
+        spawnEnemy = list[randint(0, 23)]
         tiles.placeOnRandomTile(spawnEnemy, assets.tile`transparency16`)
         spawnEnemy.setVelocity(randint(-30, 30), randint(-30, 30))
-        spawnEnemy.setBounceOnWall(true)
         spawnEnemy.setFlag(SpriteFlag.Invisible, false)
     }
 }
@@ -106,7 +105,7 @@ function placeResources (count: number) {
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
             `, SpriteKind.Food)
-        tiles.placeOnRandomTile(resource, assets.tile`transparency16`)
+        tiles.placeOnRandomTile(resource, assets.tile`myTile`)
     }
 }
 function nextLevel () {
@@ -118,7 +117,7 @@ function nextLevel () {
     }
 }
 function createEnemyShips (levelNumber: number) {
-    for (let index = 0; index < levelNumber; index++) {
+    for (let index = 0; index < levelNumber + 2; index++) {
         enemyShip = sprites.create(img`
             ....ffffff.........ccc..
             ....ff99ccf.......cc9f..
@@ -138,7 +137,7 @@ function createEnemyShips (levelNumber: number) {
             ...........fffff........
             `, SpriteKind.Enemy)
         tiles.placeOnRandomTile(enemyShip, assets.tile`transparency16`)
-        enemyShip.follow(spaceship, 40 + levelNumber * 10)
+        enemyShip.follow(spaceship, randint(20 + levelNumber * 10, 60))
     }
 }
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
