@@ -10,7 +10,7 @@
         "tilemapTile": true
     },
     "tile1": {
-        "data": "hwQQABAAAAD//////////4j////4////j/Ufj/gf//+P//+Pn/+f/48f//j//4//j/+JWB//j4j/8Y///1//iP//////j4j//49f//mIH///j/j/j5j//1+fiPGI/1////+P/1//iPiP/4//8Y/4iI//if////GPj/////GIiIj//////4iI/w==",
+        "data": "hwQQABAAAAD///////////////////////Uf//8f////////n/+f/48f///////////5Xx//j///8f///1//+P////////////9f//n/H////////5///1+f//H//1///////1//////////8Y//////+f////H///////H4/////////////w==",
         "mimeType": "image/x-mkcd-f4",
         "tilemapTile": true,
         "displayName": "myTile"
